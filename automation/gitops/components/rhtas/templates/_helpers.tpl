@@ -29,7 +29,7 @@ Optional Keycloak issuer URL.
 {{- if .Values.oidc.keycloak.issuerURL -}}
 {{- .Values.oidc.keycloak.issuerURL -}}
 {{- else if .Values.deployer.domain -}}
-https://sso.{{ .Values.deployer.domain }}/realms/{{ .Values.oidc.keycloak.realm }}
+https://{{ .Values.oidc.keycloak.hostPrefix | default "sso-tssc" }}.{{ .Values.deployer.domain }}/realms/{{ .Values.oidc.keycloak.realm }}
 {{- else -}}
 https://sso.apps.cluster.example.com/realms/{{ .Values.oidc.keycloak.realm }}
 {{- end -}}

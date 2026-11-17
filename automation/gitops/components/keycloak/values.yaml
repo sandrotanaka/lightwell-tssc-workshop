@@ -5,8 +5,10 @@ keycloak:
   enabled: true
   namespace: sso
   name: keycloak
-  # Route host prefix → sso.<deployer.domain> (required by rhtpa.oidcIssuer helper)
-  routeHostPrefix: sso
+  # Route host prefix → <prefix>.<deployer.domain>. Must match oidc.hostPrefix in rhtpa and
+  # oidc.keycloak.hostPrefix in rhtas. Fork (demo): "sso-tssc" because shared RHDP clusters
+  # already expose a platform Keycloak at sso.<domain>.
+  routeHostPrefix: sso-tssc
   image: quay.io/keycloak/keycloak:26.0.2
   replicas: 1
   # anyuid SCC — Keycloak image UID expectations under restricted OpenShift SCCs

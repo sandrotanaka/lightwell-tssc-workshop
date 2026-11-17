@@ -54,8 +54,10 @@ postgresql:
 
 # OIDC — Keycloak / RHBK required for UI and CLI auth (document; enable when SSO exists)
 oidc:
-  # When empty, derived as https://sso.<deployer.domain>/realms/<realm>
+  # When empty, derived as https://<hostPrefix>.<deployer.domain>/realms/<realm>
   issuerURL: ""
+  # Must match keycloak.routeHostPrefix in the keycloak component
+  hostPrefix: sso-tssc
   realm: tpa
   frontendClientId: frontend
   cliClientId: cli

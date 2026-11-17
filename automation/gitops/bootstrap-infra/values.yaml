@@ -29,6 +29,9 @@ gitops:
 argocd:
   namespace: openshift-gitops
   project: default
+  # Shared clusters: create a dedicated AppProject (named by argocd.project) so the demo
+  # Applications are grouped apart from other teams' work in the same Argo CD instance.
+  createProject: false
 
 # ============================================================
 # Components — enable/disable and configure each child chart

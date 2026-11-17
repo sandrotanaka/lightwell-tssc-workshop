@@ -1,0 +1,53 @@
+# Overrides para o cluster-xddtn (RHDP Field Sourced Content, compartilhado com outras demos).
+# Uso (somente após aprovação): helm template bootstrap automation/gitops/bootstrap-infra \
+#   -f automation/gitops/bootstrap-infra/values-xddtn.yaml -n openshift-gitops
+# Nenhuma credencial aqui. O cluster já tem RHBK (ns keycloak, rota sso.<domain>), AAP,
+# cert-manager, GitOps e ODF; nada disso é gerenciado por este chart.
+gitops:
+  repoUrl: "https://github.com/sandrotanaka/lightwell-tssc-workshop.git"
+  revision: "demo"          # trocar por uma tag vX.Y.Z-ads.N antes do webinar
+
+argocd:
+  project: tssc-demo
+  createProject: true
+
+deployer:
+  domain: "apps.cluster-xddtn.dyn.redhatworkshops.io"
+  apiUrl: "https://api.cluster-xddtn.dyn.redhatworkshops.io:6443"
+
+components:
+  # Keycloak próprio da demo em ns sso, rota sso-tssc.<domain> (não toca o RHBK da plataforma)
+  keycloak:
+    enabled: true
+  pipelines:
+    enabled: true
+  rhtas:
+    enabled: true
+  rhtpa:
+    enabled: true
+  rhacs:
+    enabled: true
+  admission:
+    enabled: true
+  networkPolicy:
+    enabled: true
+  gitea:
+    enabled: true
+  lightwellRepo:
+    enabled: true
+  renovate:
+    enabled: true
+  rhdh:
+    enabled: true
+  springBootLwPoc:
+    enabled: false
+  fastapiLwPoc:
+    enabled: false
+  parasolApp:
+    enabled: false
+  validateJobs:
+    enabled: true
+  showroom:
+    enabled: true
+    content:
+      repoUrl: "https://github.com/sandrotanaka/lightwell-tssc-workshop.git"

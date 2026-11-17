@@ -1,0 +1,26 @@
+{{- if .Values.argocd.createProject }}
+{{- if eq .Values.argocd.project "default" }}
+{{- fail "argocd.createProject=true requires argocd.project other than \"default\"" }}
+{{- end }}
+# Dedicated AppProject for shared clusters. Sources are limited to this workshop repository;
+# destinations stay open because the child charts install operators and cluster-scoped RBAC.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .Values.argocd.project }}
+  namespace: {{ .Values.argocd.namespace }}
+  labels:
+    {{- include "root-app.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  description: Lightwell TSSC demo (webinar)
+  sourceRepos:
+    - {{ .Values.gitops.repoUrl | quote }}
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: "*"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+{{- end }}

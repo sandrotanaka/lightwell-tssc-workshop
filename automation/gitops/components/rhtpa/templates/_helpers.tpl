@@ -27,7 +27,7 @@ OIDC issuer URL for TPA frontend / CLI.
 {{- if .Values.oidc.issuerURL -}}
 {{- .Values.oidc.issuerURL -}}
 {{- else if .Values.deployer.domain -}}
-https://sso.{{ .Values.deployer.domain }}/realms/{{ .Values.oidc.realm }}
+https://{{ .Values.oidc.hostPrefix | default "sso-tssc" }}.{{ .Values.deployer.domain }}/realms/{{ .Values.oidc.realm }}
 {{- else -}}
 https://sso.apps.cluster.example.com/realms/{{ .Values.oidc.realm }}
 {{- end -}}
